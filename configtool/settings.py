@@ -1,8 +1,10 @@
 from __future__ import print_function
 
-import ConfigParser
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
 import os
-from configtool.data import BSIZESMALL, offsetTcLabel
 
 INIFILE = "configtool.ini"
 DEFAULT_INIFILE = "configtool.default.ini"
@@ -33,7 +35,7 @@ class Settings:
         # Runtime settings
         self.verbose = 0
 
-        self.cfg = ConfigParser.ConfigParser()
+        self.cfg = configparser.ConfigParser()
         self.cfg.optionxform = str
 
         self.loaded = self.readConfig(ini)
@@ -116,7 +118,7 @@ class Settings:
         self.section = "configtool"
         try:
             self.cfg.add_section(self.section)
-        except ConfigParser.DuplicateSectionError:
+        except configparser.DuplicateSectionError:
             pass
 
         values = self.getValues()
